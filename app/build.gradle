@@ -1,0 +1,87 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "com.motilal.githubrepository"
+        minSdkVersion 16
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$versions.kotlin"
+    implementation "androidx.core:core-ktx:$versions.kotlinCoreKTX"
+    implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "com.google.android.material:material:$versions.materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$versions.constraintVersion"
+
+    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$versions.navVersion"
+
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$versions.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$versions.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okhttpVersion"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:$versions.glideVersion"
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2-native-mt'
+
+
+
+    kapt "com.github.bumptech.glide:compiler:$versions.glideVersion"
+
+    // dagger hilt
+    implementation "com.google.dagger:hilt-android:$versions.hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$versions.hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltAndroidXVersion"
+    kapt "androidx.hilt:hilt-compiler:$versions.hiltAndroidXVersion"
+
+    implementation "androidx.paging:paging-runtime:$versions.pagingVersion"
+
+    //room
+    implementation "androidx.room:room-ktx:$versions.roomVersion"
+    implementation "androidx.room:room-runtime:$versions.roomVersion"
+    annotationProcessor "androidx.room:room-compiler:$versions.roomVersion"
+    kapt "androidx.room:room-compiler:$versions.roomVersion"
+
+   // implementation 'android.arch.work:work-runtime-ktx:1.0.1'
+    implementation 'androidx.work:work-runtime-ktx:2.6.0'
+
+}
