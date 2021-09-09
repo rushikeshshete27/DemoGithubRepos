@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 private const val STARTING_PAGE_INDEX = 1
 
-class ReposPagingSource(private val reposDao: ReposDao, private val query: String): PagingSource<Int, Repo>() {
+class ReposPagingSource(private val reposDao: ReposDao): PagingSource<Int, Repo>() {
     @Inject lateinit var githubRepository: GithubRepository
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Repo> {
         var position = params.key ?: STARTING_PAGE_INDEX

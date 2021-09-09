@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
        // ForegroundService.startService(this,"Foreground Service is running")
         Utils.checkAndScheduleWorker(this.applicationContext,TAG_MY_WORK)
+
+
     }
 
 

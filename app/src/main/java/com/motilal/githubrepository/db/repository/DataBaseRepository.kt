@@ -32,7 +32,7 @@ class DataBaseRepository @Inject constructor(private val reposDao: ReposDao) {
                 maxSize = 100,
                 enablePlaceholders = false
             ),
-            pagingSourceFactory = { ReposPagingSource(reposDao, query) }
+            pagingSourceFactory = { ReposPagingSource(reposDao) }
         ).liveData
 
 

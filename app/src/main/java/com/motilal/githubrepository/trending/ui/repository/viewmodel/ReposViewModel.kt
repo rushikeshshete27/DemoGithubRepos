@@ -1,5 +1,6 @@
 package com.motilal.githubrepository.trending.ui.repository.viewmodel
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
@@ -21,21 +22,23 @@ class ReposViewModel @Inject constructor (private val gitRepository: GithubRepos
 
 
     val repos = currentQuery.switchMap { queryString ->
-       val list= GlobalScope.launch {
-            if(Utils.isInternetAvailable()) {
-               async {
-                   delay(5000)
-                 storeData()
-                }
-            }
 
-        }
+      runBlocking {
+          launch {
+              storeData()
+          }
+      }
+
         dataBaseRepository.getSearchResults(queryString).cachedIn(viewModelScope)
     }
 
-    suspend fun storeData(){
-        var listRepos = gitRepository.fetchRepositories()
-        dataBaseRepository.insertRepositories(listRepos)
+    @WorkerThread
+    suspend fun storeData() : Unit =  withContext(Dispatchers.IO) {
+        if (Utils.isInternetAvailable()) {
+            var listRepos = gitRepository.fetchRepositories()
+            dataBaseRepository.insertRepositories(listRepos)
+        }
+
     }
 
 
