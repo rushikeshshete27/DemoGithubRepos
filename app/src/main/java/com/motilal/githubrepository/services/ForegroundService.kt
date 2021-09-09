@@ -44,7 +44,7 @@ class ForegroundService : Service() {
         }
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(Utils.isInternetAvailable())
+
         downloadAndStoreData()
 
         val input = intent?.getStringExtra("inputExtra")
@@ -78,12 +78,15 @@ class ForegroundService : Service() {
 
     fun downloadAndStoreData() {
         scope.launch {
-            val response = githubRepository.fetchRepositories();
-            Log.d("Response",""+response.get(0).description)
-            dataBaseRepository.insertRepositories(response)
-            val listRepos = dataBaseRepository.getRepositories()
-            Log.d("Response",""+listRepos.get(1).description)
-            stopService(application)
+            if(Utils.isInternetAvailable()) {
+                val response = githubRepository.fetchRepositories();
+               // Log.d("Response", "" + response.get(0).description)
+                if(response!=null && response.size >0)
+                dataBaseRepository.insertRepositories(response)
+               // val listRepos = dataBaseRepository.getRepositories()
+               // Log.d("Response", "" + listRepos.get(1).description)
+                stopService(application)
+            }
         }
     }
 }

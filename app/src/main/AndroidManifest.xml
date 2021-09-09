@@ -54,7 +54,7 @@
         </service>
 
         <receiver android:name="com.motilal.githubrepository.receivers.DeviceBootReceiver"
-            android:enabled="false">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>
