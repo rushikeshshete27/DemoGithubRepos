@@ -1,9 +1,11 @@
-package com.motilal.githubrepository.db.entity.covertor
+package com.motilal.githubrepository.trending.data
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.motilal.githubrepository.db.dao.ReposDao
 import com.motilal.githubrepository.trending.api.GithubApi
+import com.motilal.githubrepository.trending.data.GithubRepository
 import com.motilal.githubrepository.trending.data.model.Repo
 import retrofit2.HttpException
 import java.io.IOException
@@ -12,15 +14,16 @@ import javax.inject.Inject
 private const val STARTING_PAGE_INDEX = 1
 
 class ReposPagingSource(private val reposDao: ReposDao, private val query: String): PagingSource<Int, Repo>() {
-
+    @Inject lateinit var githubRepository: GithubRepository
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Repo> {
-        val position = params.key ?: STARTING_PAGE_INDEX
+        var position = params.key ?: STARTING_PAGE_INDEX
 
         return try {
-           // val response = githubApi.getTrendingRepos(query, position, params.loadSize)
-           // val repos = response.items
 
-            val response = reposDao.getReposByLimits(position, params.loadSize)
+            if(position > 1)
+                position = position + params.loadSize
+
+            val response = reposDao.getReposByLimits(position, position+params.loadSize)
             val repos = response
 
 

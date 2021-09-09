@@ -1,6 +1,6 @@
 package com.motilal.githubrepository.db.di
 
-import com.motilal.githubrepository.db.viewmodel.RepoViewModel
+
 import com.motilal.githubrepository.trending.data.GithubRepository
 import dagger.Module
 import dagger.Provides

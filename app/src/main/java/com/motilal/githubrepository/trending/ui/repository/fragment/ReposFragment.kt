@@ -27,7 +27,10 @@ import com.motilal.githubrepository.trending.ui.repository.viewmodel.ReposViewMo
 
 import com.motilal.githubrepository.trending.ui.repository.adapter.ReposAdapter
 import com.motilal.githubrepository.trending.ui.repository.adapter.ReposLoadStateAdapter
+import com.motilal.githubrepository.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import okhttp3.internal.wait
 import java.util.*
 
 
@@ -74,9 +77,9 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
             }
         }
 
-        viewModel.repos.observe(viewLifecycleOwner) { it->
-            adapter.submitData(viewLifecycleOwner.lifecycle,it)
-        }
+        viewModel.repos.observe(viewLifecycleOwner) { it ->
+            adapter.submitData(viewLifecycleOwner.lifecycle, it)}
+
 
         adapter.addLoadStateListener { loadState ->
             binding.apply {
@@ -98,41 +101,9 @@ class ReposFragment : Fragment(R.layout.fragment_repos) {
             }
         }
 
-        setHasOptionsMenu(true)
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        inflater.inflate(R.menu.menu_repos, menu)
-
-        val searchItem = menu.findItem(R.id.action_search)
-        val searchView = searchItem.actionView as SearchView
-        val searchAutoComplete: SearchAutoComplete = searchView.findViewById(R.id.search_src_text)
-
-        // Get SearchView autocomplete object
-        searchAutoComplete.setTextColor(Color.WHITE)
-        searchAutoComplete.setDropDownBackgroundResource(R.color.colorPrimary)
-
-        val newsAdapter: ArrayAdapter<String> = ArrayAdapter(
-            this.requireContext(),
-            R.layout.dropdown_item,
-            Languages.data
-        )
-        searchAutoComplete.setAdapter(newsAdapter)
-
-        // Listen to search view item on click event
-        searchAutoComplete.onItemClickListener =
-            OnItemClickListener { adapterView, _, itemIndex, _ ->
-                val queryString = adapterView.getItemAtPosition(itemIndex) as String
-                searchAutoComplete.setText(String.format(getString(R.string.search_query), queryString))
-                binding.rvRepositories.scrollToPosition(0)
-                val languageQuery = String.format(getString(R.string.query), queryString)
-                viewModel.searchRepos(languageQuery)
-                searchView.clearFocus()
-                (activity as AppCompatActivity).supportActionBar?.title = queryString.capitalize(Locale.ROOT)
-            }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

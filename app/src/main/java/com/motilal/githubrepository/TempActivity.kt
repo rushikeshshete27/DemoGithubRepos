@@ -2,7 +2,6 @@ package com.motilal.githubrepository
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,7 +9,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import com.motilal.githubrepository.databinding.ActivityTemp2Binding
-import com.motilal.githubrepository.db.api.ApiWorker
+import com.motilal.githubrepository.worker.ApiWorker
 import com.motilal.githubrepository.services.ForegroundService
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
@@ -34,8 +33,10 @@ class TempActivity : AppCompatActivity() {
             ForegroundService.stopService(this)
         })
 
-        scheduleWork(TAG_MY_WORK);
+      //  scheduleWork(TAG_MY_WORK);
 
+
+        testWorker()
 
 
     }
@@ -43,8 +44,15 @@ class TempActivity : AppCompatActivity() {
 
 
     fun scheduleWork(tag: String?) {
-        val periodicWork = PeriodicWorkRequest.Builder(ApiWorker::class.java, 1, TimeUnit.MINUTES,1,TimeUnit.MINUTES)
+        val periodicWork = PeriodicWorkRequest.Builder(ApiWorker::class.java, 2, TimeUnit.MINUTES,2,TimeUnit.MINUTES)
         val request = periodicWork.build()
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(tag!!, ExistingPeriodicWorkPolicy.KEEP, request)
+    }
+
+    fun testWorker() {
+        var shared = applicationContext.getSharedPreferences("gitdb", Context.MODE_PRIVATE)
+        var total = shared.getInt("total", 0)
+        binding.tvTotal.setText(""+total)
+
     }
 }

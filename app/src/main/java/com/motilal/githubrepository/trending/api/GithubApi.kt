@@ -16,10 +16,5 @@ interface GithubApi {
         @Query("per_page") itemsPerPage: Int
     ): RepoSearchResponse
 
-    @GET("search/repositories?sort=stars")
-    suspend fun getTrending(
-        @Query("q") query: String,
-        @Query("page") page: Int,
-        @Query("per_page") itemsPerPage: Int
-    ): RepoSearchResponse
+
 }

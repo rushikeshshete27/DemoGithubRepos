@@ -17,19 +17,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitHubRepository">
 
-         <provider
-     android:name="androidx.startup.InitializationProvider"
-     android:authorities="${applicationId}.androidx-startup"
-     android:exported="false"
-     tools:node="merge">
-     <!-- If you are using androidx.startup to initialize other components -->
-     <meta-data
-         android:name="androidx.work.impl.WorkManagerInitializer"
-         android:value="androidx.startup"
-         tools:node="remove" />
- </provider>
+<!--        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            &lt;!&ndash; If you are using androidx.startup to initialize other components &ndash;&gt;
+            <meta-data
+                android:name="androidx.work.impl.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>-->
 
-       <!-- <activity android:name=".TempActivity">
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            tools:node="remove">
+        </provider>
+
+  <!--      <activity android:name=".TempActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -13,10 +13,10 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.motilal.githubrepository.R
 import com.motilal.githubrepository.db.repository.DataBaseRepository
-import com.motilal.githubrepository.db.viewmodel.RepoViewModel
 import com.motilal.githubrepository.trending.data.GithubRepository
 import com.motilal.githubrepository.trending.ui.MainActivity
 import com.motilal.githubrepository.trending.ui.repository.viewmodel.ReposViewModel
+import com.motilal.githubrepository.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -44,6 +44,7 @@ class ForegroundService : Service() {
         }
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if(Utils.isInternetAvailable())
         downloadAndStoreData()
 
         val input = intent?.getStringExtra("inputExtra")

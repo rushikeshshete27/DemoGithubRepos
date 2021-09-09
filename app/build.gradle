@@ -70,7 +70,8 @@ dependencies {
     // dagger hilt
     implementation "com.google.dagger:hilt-android:$versions.hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$versions.hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltAndroidXVersion"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltAndroidXVersion"
+    implementation "androidx.hilt:hilt-work:$versions.hiltAndroidXVersion"
     kapt "androidx.hilt:hilt-compiler:$versions.hiltAndroidXVersion"
 
     implementation "androidx.paging:paging-runtime:$versions.pagingVersion"

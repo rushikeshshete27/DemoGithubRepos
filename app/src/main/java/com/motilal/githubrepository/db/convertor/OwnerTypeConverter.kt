@@ -1,4 +1,4 @@
-package com.motilal.githubrepository.db.entity.covertor
+package com.motilal.githubrepository.db.convertor
 
 import androidx.room.TypeConverter
 import com.motilal.githubrepository.trending.data.model.Owner
