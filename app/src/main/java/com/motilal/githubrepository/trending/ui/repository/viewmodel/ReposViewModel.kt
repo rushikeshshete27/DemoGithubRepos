@@ -19,8 +19,6 @@ class ReposViewModel @Inject constructor (private val gitRepository: GithubRepos
 
     private val currentQuery = MutableLiveData(DEFAULT_QUERY)
 
-
-
     val repos = currentQuery.switchMap { queryString ->
 
       runBlocking {
@@ -36,6 +34,7 @@ class ReposViewModel @Inject constructor (private val gitRepository: GithubRepos
     suspend fun storeData() : Unit =  withContext(Dispatchers.IO) {
         if (Utils.isInternetAvailable()) {
             var listRepos = gitRepository.fetchRepositories()
+            if(!listRepos.isEmpty())
             dataBaseRepository.insertRepositories(listRepos)
         }
 
